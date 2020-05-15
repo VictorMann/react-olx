@@ -30,4 +30,44 @@ a {
     .logo-2 { color: #0F0; }
     .logo-3 { color: #00F; }
 }
+
+nav {
+    padding-top: 10px;
+    padding-bottom: 10px;
+
+    ul, li {
+        padding: 0;
+        margin: 0;
+        list-style: none;
+    }
+    ul {
+        display: flex;
+        align-items: center;
+        height: 40px;
+    }
+    li {
+        margin-left: 20px;
+        margin-right: 20px;
+
+        a {
+            color: #000;
+            font-size: 14px;
+
+            &:hover {
+                color: #555;
+            }
+            &.button {
+                background-color: #ff8100;
+                border-radius: 4px;
+                color: #fff;
+                padding: 5px 10px;
+            }
+            &.button:hover {
+                background-color: #E57706;
+            }
+        }
+    }
+}
+
+
 `;
