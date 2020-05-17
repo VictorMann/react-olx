@@ -49,9 +49,13 @@ nav {
         margin-left: 20px;
         margin-right: 20px;
 
-        a {
-            color: #000;
+        a, button {
+            border: 0;
+            background: none;
+            color: #111;
             font-size: 14px;
+            cursor: pointer;
+            outline: none;
 
             &:hover {
                 color: #555;
