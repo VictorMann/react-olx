@@ -32,20 +32,25 @@ const Page = () => {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-        /*
         setDisabled(true);
+        setError('');
 
-        const json = await api.login(email, password);
+        if (password !== confirmPassword) {
+            setError('Senha não batem');
+            setDisabled(false);
+            return;
+        }
 
+        const json = await api.register(name, email, password, stateLoc);
+        
         if (json.error) {
             setError(json.error);
         } else {
-            doLogin(json.token, rememberPassword);
+            doLogin(json.token);
             window.location.href = '/';
         }
         // libera depois da requisição
         setDisabled(false);
-        */
     };
 
     return (
@@ -75,7 +80,7 @@ const Page = () => {
                                 value={stateLoc} 
                                 onChange={e => setStateLoc(e.target.value)} 
                                 required>
-                                    
+
                                     <option></option>
                                     {stateList.map((i, k) => (
                                         <option 
