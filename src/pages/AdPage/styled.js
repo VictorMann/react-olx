@@ -93,3 +93,29 @@ margin-top: 20px;
     }
 }
 `;
+
+export const OthersArea = styled.div`
+h2 {
+    font-size: 20px;
+}
+.list {
+    display: flex;
+    flex-wrap: wrap;
+
+    .aditem {
+        width: 25%;
+    }
+}
+`;
+
+export const BreadCrumb = styled.div`
+font-size: 13px;
+margin-top: 20px;
+
+a {
+    display: inline-block;
+    margin: 0 5px;
+    text-decoration: underline;
+    color: #333;
+}
+`;
