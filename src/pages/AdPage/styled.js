@@ -66,5 +66,30 @@ margin-top: 20px;
 }
 .rightSide {
     width: 250px;
+
+    .price span {
+        color: #00f;
+        display: block;
+        font-size: 27px;
+        font-weight: bold;
+    }
+    .contactSellerLink {
+        background: #00f;
+        color: #fff;
+        height: 30px;
+        border-radius: 5px;
+        box-shadow: 0 0 4px #999;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-decoration: none;
+        margin-bottom: 20px;
+    }
+
+    .createdBy small {
+        display: block;
+        color: #999;
+        margin-top: 10px;
+    }
 }
 `;
