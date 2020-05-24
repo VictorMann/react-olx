@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+import { Slide } from 'react-slideshow-image';
 import { PageContainer } from '../../components/MainComponents';
 import { PageArae } from './styled';
 import { Fake } from './styled';
@@ -41,6 +42,15 @@ const Page = () => {
                     <div className="box">
                         <div className="adImage">
                             {loading && <Fake height={300} />}
+                            {adInfo.images &&
+                                <Slide>
+                                    {adInfo.images.map((img, key) => (
+                                        <div key={key} className="each-slide">
+                                            <img src={img} alt="" />
+                                        </div>
+                                    ))}
+                                </Slide>
+                            }
                         </div>
                         <div className="adInfo">
                             <div className="adName">
