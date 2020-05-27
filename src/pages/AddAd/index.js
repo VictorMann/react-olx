@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { useHistory } from 'react-router-dom';
 import MaskedInput from 'react-text-mask';
 import createNumberMask from 'text-mask-addons/dist/createNumberMask';
 import { PageContainer, PageTitle, ErrorMessage } from '../../components/MainComponents';
@@ -10,6 +11,7 @@ const Page = () => {
     const api = useApi();
 
     const fileField = useRef();
+    const history = useHistory();
 
     const [categories, setCategories] = useState([]);
 
@@ -34,18 +36,53 @@ const Page = () => {
         event.preventDefault();
         setDisabled(true);
         setError('');
+        let errors = [];
 
-        // const json = await api.login(email, password);
+        if (!title.trim()) {
+            errors.push('Sem titulo');
+        }
 
-        // if (json.error) {
-        //     setError(json.error);
-        // } else {
-        //     doLogin(json.token, rememberPassword);
-        //     window.location.href = '/';
-        // }
+        if (!category) {
+            errors.push('Sem categoria');
+        }
+
+        // tudo ok para enviar
+        if (errors.length === 0) {
+            const fData = new FormData();
+            fData.append('title', title);
+            fData.append('price', price);
+            fData.append('priceneg', priceNegotiable);
+            fData.append('desc', desc);
+            fData.append('cat', category);
+
+            // obtem as imagens
+            let files = fileField.current.files;
+            // verifica se foi enviado alguma imagem
+            if (files.length > 0) {
+                for (let i = 0; i < files.length; i ++) {
+                    fData.append('img', files[i]);
+                }
+            }
+
+            // requisição
+            const json = await api.addAd(fData);
+
+            // se não houver erros
+            if (!json.error) {
+                history.push(`/ad/${json.id}`);
+                return;
+                
+            // se houver erro
+            } else {
+                setError(json.error);
+            }
 
 
-        // libera depois da requisição
+
+        } else {
+            setError(errors.join("\n"));
+        }
+
         setDisabled(false);
     };
 

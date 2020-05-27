@@ -3,6 +3,33 @@ import qs from 'qs';
 
 const BASEAPI = 'http://alunos.b7web.com.br:501';
 
+const apiFetchFile = async (endpoint, body) => {
+    // adiciona o token no corpo da requisição
+    // caso não tenha
+    if (!body.token) {
+        let token = Cookie.get('token');
+        if (token) body.append('token', token);
+    }
+
+    // requisição POST
+    const res = await fetch(BASEAPI + endpoint, {
+        method: 'POST',
+        body
+    });
+
+    // retorno em JSON
+    const json = await res.json();
+
+    // caso não tenha permissão redireciona
+    // para o login
+    if (json.notallowed) {
+        window.location.href = '/signin';
+        return;
+    }
+
+    return json;
+};
+
 const apiFetchPost = async (endpoint, body) => {
 
     // adiciona o token no corpo da requisição
@@ -101,6 +128,14 @@ const OlxAPI = {
         const json = await apiFetchGet(
             '/ad/item',
             {id, other}
+        );
+        return json;
+    },
+
+    addAd: async (fData) => {
+        const json = await apiFetchFile(
+            '/ad/add',
+            fData
         );
         return json;
     }
