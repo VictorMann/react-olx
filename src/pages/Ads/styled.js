@@ -57,6 +57,12 @@ margin-top: 20px;
         margin-top: 0;
         font-size: 18px;
     }
+
+    .listWarning {
+        text-align: center;
+        padding: 10px;
+    }
+
     list {
         display: flex;
         flex-wrap: wrap;

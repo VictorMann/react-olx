@@ -19,6 +19,7 @@ const Page = () => {
     const [adList, setAdList] = useState([]);
 
     const [resultOpacity, setResultOpacity] = useState(1);
+    const [loading, setLoading] = useState(true);
 
     const useQueryString = () => {
         return new URLSearchParams( useLocation().search );
@@ -32,6 +33,9 @@ const Page = () => {
 
     const getAdsList = async () => {
         
+        // exibe carregamento
+        setLoading(true);
+
         const json = await api.getAds({
             sort: 'desc',
             limit: 8,
@@ -43,6 +47,8 @@ const Page = () => {
         setAdList(json.ads);
         // finaliza a impressão de carregamento ao usuário
         setResultOpacity(1);
+        // indica termino do carregamento
+        setLoading(false);
     };
 
     /**
@@ -146,6 +152,14 @@ const Page = () => {
                     </div>
                     <div className="rightSide">
                         <h2>Resultados</h2>
+
+                        {loading &&
+                            <div className="listWarning">Carregando...</div>
+                        }
+                        {loading && adList.length == 0 &&
+                            <div className="listWarning">Não encontramos resultados.</div>
+                        }
+
                         <div className="list" style={{opaticy: resultOpacity}}>
                             {adList.map((i,k) =>
                                 <AdItem key={k} data={i} />
