@@ -14,6 +14,10 @@ const Page = () => {
     const api = useApi();
     const history = useHistory();
     
+    // states para paginação
+    const [adsTotal, setAdsTotal] = useState(0);
+    const [pageCount, setPageCount] = useState(0);
+
     const [stateList, setStateList] = useState([]);
     const [categories, setCategories] = useState([]);
     const [adList, setAdList] = useState([]);
@@ -38,18 +42,30 @@ const Page = () => {
 
         const json = await api.getAds({
             sort: 'desc',
-            limit: 8,
+            limit: 2,
             q,
             cat,
             state
         });
         // atribui os valores a state adList
         setAdList(json.ads);
+        // set o tatal de items no banco da consulta para paginação
+        setAdsTotal(json.total);
         // finaliza a impressão de carregamento ao usuário
         setResultOpacity(1);
         // indica termino do carregamento
         setLoading(false);
     };
+
+    /**
+     *  para paginação
+     */
+    useEffect(() => {
+        // condicional de segurança divisão por 0 (ZERO)
+        if (adList.length == 0) 
+            setPageCount( Math.ceil( adsTotal / adList.length ) );
+        else setPageCount(0);
+    }, [adsTotal]);
 
     /**
      *  monitora mudanças dos filtros
@@ -104,7 +120,11 @@ const Page = () => {
         getCategories();
     }, []);
 
-    
+    // cria array para iterar sobre o total de paginas
+    // a ser exibido na paginação
+    let pagination = [];
+    for (let i = 1; i <= pageCount; pagination.push(i ++)) /* vazio */ ;
+
     return (
         <>
             <PageContainer>
@@ -165,6 +185,15 @@ const Page = () => {
                                 <AdItem key={k} data={i} />
                             )}
                         </div>
+                        
+                        <div className="pagination">
+                            {pagination.map((i,k) =>
+                                <div key={k} className="pagItem">
+                                    {i}
+                                </div>
+                            )}
+                        </div>
+
                     </div>
                 </PageArae>
             </PageContainer>
