@@ -63,11 +63,11 @@ margin-top: 20px;
         padding: 10px;
     }
 
-    list {
+    .list {
         display: flex;
         flex-wrap: wrap;
 
-        .aditeom {
+        .aditem {
             width: 33%;
         }
     }
@@ -86,6 +86,15 @@ margin-top: 20px;
             justify-content: center;
             font-size: 14px;
             margin: 0 .3em;
+            cursor: pointer;
+
+            &:hover {
+                border-color: #999;
+            }
+
+            &.active {
+                background-color: #9bb83c;
+            }
         }
     }
 }

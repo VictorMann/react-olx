@@ -17,6 +17,7 @@ const Page = () => {
     // states para paginação
     const [adsTotal, setAdsTotal] = useState(0);
     const [pageCount, setPageCount] = useState(0);
+    const [currentPage, setCurrentPage] = useState(1);
 
     const [stateList, setStateList] = useState([]);
     const [categories, setCategories] = useState([]);
@@ -40,12 +41,16 @@ const Page = () => {
         // exibe carregamento
         setLoading(true);
 
+        // calc para consulta por pagina corrente
+        let offset = (currentPage - 1) * 2;
+        
         const json = await api.getAds({
             sort: 'desc',
             limit: 2,
             q,
             cat,
-            state
+            state,
+            offset
         });
         // atribui os valores a state adList
         setAdList(json.ads);
@@ -57,12 +62,25 @@ const Page = () => {
         setLoading(false);
     };
 
+
+    /**
+     *  consulta dados através da paginação corrente
+     */
+    useEffect(() => {
+
+        // simula carregamento
+        setResultOpacity(.3);
+        // carrega itens
+        getAdsList();
+
+    }, [currentPage]);
+
     /**
      *  para paginação
      */
     useEffect(() => {
         // condicional de segurança divisão por 0 (ZERO)
-        if (adList.length == 0) 
+        if (adList.length !== 0) 
             setPageCount( Math.ceil( adsTotal / adList.length ) );
         else setPageCount(0);
     }, [adsTotal]);
@@ -95,7 +113,9 @@ const Page = () => {
         
         // causa a impressão de algo carregando para o usuário
         // como um loading
-        setResultOpacity(.3);
+        setResultOpacity(0.3);
+        // reseta para 1 pag na paginação
+        setCurrentPage(1);
         
 
     }, [q, cat, state]);
@@ -173,14 +193,14 @@ const Page = () => {
                     <div className="rightSide">
                         <h2>Resultados</h2>
 
-                        {loading &&
+                        {loading && adList.length === 0 &&
                             <div className="listWarning">Carregando...</div>
                         }
-                        {loading && adList.length == 0 &&
+                        {!loading && adList.length === 0 &&
                             <div className="listWarning">Não encontramos resultados.</div>
                         }
 
-                        <div className="list" style={{opaticy: resultOpacity}}>
+                        <div className="list" style={{opacity: resultOpacity}}>
                             {adList.map((i,k) =>
                                 <AdItem key={k} data={i} />
                             )}
@@ -188,8 +208,12 @@ const Page = () => {
                         
                         <div className="pagination">
                             {pagination.map((i,k) =>
-                                <div key={k} className="pagItem">
-                                    {i}
+                                <div 
+                                    key={k} 
+                                    className={i === currentPage ? 'pagItem active' : 'pagItem'}
+                                    onClick={() => setCurrentPage(i)}>
+
+                                        {i}
                                 </div>
                             )}
                         </div>
