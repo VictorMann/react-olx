@@ -73,5 +73,27 @@ nav {
     }
 }
 
+@media (max-width: 600px) {
+
+    & {
+        height: auto;
+    }
+    .container {
+        flex-direction: column;
+    }
+    .logo {
+        justify-content: center;
+        margin: 20px 0;
+    }
+
+    nav ul {
+        flex-direction: column;
+        height: auto;
+
+        li {
+            margin: .75em 0;
+        }
+    }
+}
 
 `;
