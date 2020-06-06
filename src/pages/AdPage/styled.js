@@ -92,6 +92,32 @@ margin-top: 20px;
         margin-top: 10px;
     }
 }
+
+@media (max-width: 600px) {
+
+    & {
+        flex-direction: column;
+    }
+
+    .leftSide {
+        margin-right: 0;
+        margin-bottom: 1.5em;
+
+        .box {
+            flex-direction: column;
+            width: 320px;
+            margin: auto;
+
+            .adInfo {
+                padding: .75em;
+            }
+        }
+    }
+    .rightSide {
+        width: 320px;
+        margin: auto;
+    }
+}
 `;
 
 export const OthersArea = styled.div`
@@ -106,6 +132,14 @@ h2 {
         width: 25%;
     }
 }
+
+@media (max-width: 600px) {
+    .list {
+        .aditem {
+            width: 50%;
+        }
+    }
+}
 `;
 
 export const BreadCrumb = styled.div`
@@ -117,5 +151,11 @@ a {
     margin: 0 5px;
     text-decoration: underline;
     color: #333;
+}
+
+@media (max-width: 600px) {
+    & {
+        margin: 10px;
+    }
 }
 `;
