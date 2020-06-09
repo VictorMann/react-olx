@@ -55,4 +55,31 @@ form {
         }
     }
 }
+
+@media (max-width: 600px) {
+    form {
+        .area {
+            flex-direction: column;
+
+            .area--title {
+                width: 100%;
+                text-align: initial;
+                margin-bottom: .5em;
+            }
+            .area--input {
+                width: 100%;
+                text-align: initial;
+
+                [type=checkbox] {
+                    width: auto;
+                }
+
+                button {
+                    width: 100%;
+                    padding: 10px;
+                }
+            }
+        }
+    }
+}
 `;
